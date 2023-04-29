@@ -1,0 +1,21 @@
+﻿    @model List<MyBlog.Models.Blog>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    <title></title>
+    </head>
+    <body>
+        
+        <h1>Hello everyone</h1>
+        <h2>This is my personal blog</h2>
+
+       @foreach(var blogs in Model){
+        
+        <h1>Title: @blogs.Title</h1>
+        <h2>Description: @blogs.Description</h2>
+        <h4>Date created: @blogs.DateCreated </h4>
+        
+        }
+    </body>
+</html>
