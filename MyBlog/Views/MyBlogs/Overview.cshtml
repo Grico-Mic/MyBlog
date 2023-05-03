@@ -1,0 +1,37 @@
+﻿    @model List<MyBlog.Models.Blog>
+
+@{
+    ViewBag.Title = "Overview";
+}
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ViewBag.Title</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            @foreach (var blogs in Model)
+            {
+            <div class="col-md-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">@blogs.Title</h5>
+                        <p class="card-text">@blogs.Description</p>
+                        <p class="card-text">Created:@blogs.DateCreated</p>
+                        <a href="#" class="btn btn-primary stretched-link">See more...</a>
+                    </div>
+                </div>
+            </div>
+               
+
+                @*<h1>Title: @blogs.Title</h1>
+                <h2>Description: @blogs.Description</h2>
+                <h4>Date created: @blogs.DateCreated </h4>*@
+            }
+        </div>
+    </div>
+</body>
+</html>
