@@ -3,13 +3,13 @@ using MyBlog.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyBlog.Controllers
 {
     public class MyBlogsController : Controller
     {
-        public IActionResult Overview()
+        public List<Blog> Blogs { get; set; }
+        public MyBlogsController()
         {
             var myBlog1 = new Blog();
             myBlog1.Id = 1;
@@ -23,11 +23,22 @@ namespace MyBlog.Controllers
             myBlog2.Description = "This is some description number 2.";
             myBlog2.DateCreated = DateTime.Now;
 
-            var myBlogs = new List<Blog> { myBlog1, myBlog2 };
+            Blogs = new List<Blog> { myBlog1, myBlog2 };
+        }
+        public IActionResult Overview()
+        {
+          
+            return View(Blogs);
+        }
+        public IActionResult Details(int id)
+        {
+            var blogs = Blogs.FirstOrDefault(x => x.Id == id);
+            if (blogs == null)
+            {
+               return RedirectToAction("ErrorNotFound", "Info");
+            }
 
-
-
-            return View(myBlogs);
+            return View(blogs);
         }
     }
 }
