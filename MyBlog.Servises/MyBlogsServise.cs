@@ -1,17 +1,18 @@
 ﻿using MyBlog.Models;
 using MyBlog.Repositories;
-using System;
+using MyBlog.Repositories.Interfaces;
+using MyBlog.Servises.Interfaces;
 using System.Collections.Generic;
 
 namespace MyBlog.Servises
 {
-    public class MyBlogsServise
+    public class MyBlogsServise : IMyBlogsServise
     {
-        private MyBlogsRepository _myBlogsRepository { get; set; }
+        private IMyBlogsRepository _myBlogsRepository { get; set; }
 
-        public MyBlogsServise()
+        public MyBlogsServise(IMyBlogsRepository myBlogsRepository)
         {
-            _myBlogsRepository = new MyBlogsRepository();
+            _myBlogsRepository = myBlogsRepository;
         }
 
         public List<Blog> GetAll()

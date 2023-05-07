@@ -1,11 +1,12 @@
 ﻿using MyBlog.Models;
+using MyBlog.Repositories.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MyBlog.Repositories
 {
-    public class MyBlogsRepository
+    public class MyBlogsRepository : IMyBlogsRepository
     {
         public List<Blog> Blogs { get; set; }
         public MyBlogsRepository()

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Models;
 using MyBlog.Servises;
+using MyBlog.Servises.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace MyBlog.Controllers
 {
     public class MyBlogsController : Controller
     {
-        public MyBlogsServise _servise { get; set; }
-        public MyBlogsController()
+        public IMyBlogsServise _servise { get; set; }
+        public MyBlogsController(IMyBlogsServise blogsServise)
         {
-            _servise = new MyBlogsServise();
+            _servise = blogsServise;
         }
         public IActionResult Overview()
         {

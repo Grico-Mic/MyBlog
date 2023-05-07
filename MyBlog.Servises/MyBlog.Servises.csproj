@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyBlog.Models\MyBlog.Models.csproj" />
     <ProjectReference Include="..\MyBlog.Repositories\MyBlog.Repositories.csproj" />
   </ItemGroup>
 
