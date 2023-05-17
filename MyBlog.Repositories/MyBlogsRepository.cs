@@ -36,6 +36,9 @@ namespace MyBlog.Repositories
             return Blogs;
         }
 
-
+        public void Create(Blog blog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -8,5 +8,6 @@ namespace MyBlog.Repositories.Interfaces
     {
         public Blog GetById(int id);
         public List<Blog> GetAll();
+        void Create(Blog blog);
     }
 }

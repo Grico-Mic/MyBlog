@@ -25,6 +25,10 @@ namespace MyBlog.Servises
             return _myBlogsRepository.GetById(id);
 
         }
-             
+
+        public void Create(Blog blog)
+        {
+            _myBlogsRepository.Create(blog);
+        }
     }
 }

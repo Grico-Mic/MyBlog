@@ -30,5 +30,21 @@ namespace MyBlog.Controllers
 
             return View(blogs);
         }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Blog blog)
+        {
+            if (ModelState.IsValid)
+            {
+                _servise.Create(blog);
+               return RedirectToAction("Overview");
+            }
+
+            return View(blog);
+        }
     }
 }
