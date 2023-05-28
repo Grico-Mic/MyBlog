@@ -15,9 +15,9 @@ namespace MyBlog.Controllers
         {
             _servise = blogsServise;
         }
-        public IActionResult Overview()
+        public IActionResult Overview(string title)
         {
-            var blogs = _servise.GetAll();
+            var blogs = _servise.GetBlogByTitle(title);
             return View(blogs);
         }
         public IActionResult Details(int id)

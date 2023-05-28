@@ -11,23 +11,32 @@
     <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 </head>
 <body>
+    <form action="/MyBlogs/Overview" method="get" class="form-inline my-2 my-lg-0">
+        <div class="form-group mr-sm-2">
+            <input type="text" name="Title" value="" class="form-control" placeholder="Search" />
+        </div>
+        <div class="form-group my-2 my-sm-0">
+            <input type="submit" value="Search" class="btn btn-primary" />
+
+        </div>
+    </form>
     <div class="container">
         <div class="row">
             @foreach (var blogs in Model)
             {
-            <div class="col-md-3">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">@blogs.Title</h5>
-                        <p class="card-text">@blogs.Description</p>
-                        <p class="card-text">Created:@blogs.DateCreated</p>
-                        <a href="/MyBlogs/Details/@blogs.Id" class="btn btn-primary stretched-link">See more...</a>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@blogs.Title</h5>
+                            <p class="card-text">@blogs.Description</p>
+                            <p class="card-text">Created:@blogs.DateCreated</p>
+                            <a href="/MyBlogs/Details/@blogs.Id" class="btn btn-primary stretched-link">See more...</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-               
 
-             
+
+
             }
         </div>
     </div>

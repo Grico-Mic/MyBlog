@@ -30,5 +30,17 @@ namespace MyBlog.Servises
         {
             _myBlogsRepository.Create(blog);
         }
+
+        public List<Blog> GetBlogByTitle(string title)
+        {
+            if (title == null)
+            {
+                return _myBlogsRepository.GetAll();
+            }
+            else
+            {
+                return _myBlogsRepository.GetBlogByTitle(title);
+            }
+        }
     }
 }

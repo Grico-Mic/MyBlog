@@ -66,24 +66,27 @@ namespace MyBlog.Repositories
             }
             return result;
         }
-        public Blog GetByTitle(string title)
+        public List<Blog> GetBlogByTitle(string title)
         {
-            Blog result = null;
+            var result = new List<Blog>();
             using (var cnn = new SqlConnection("Server=DESCTOP-V9GRIC;Database=MyBlog;Trusted_Connection=true;"))
             {
                 cnn.Open();
-                var query = $"select* from MyBlogs where Title = @Title";
+                var query = $"select* from MyBlogs where Title like @Title";
                 var cmd = new SqlCommand(query, cnn);
-                cmd.Parameters.AddWithValue("@Title", title);
+                cmd.Parameters.AddWithValue("@Title", $"%{ title}%");
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
                 {
-                    result = new Blog();
-                    result.Id = reader.GetInt32(0);
-                    result.Title = reader.GetString(1);
-                    result.Description = reader.GetString(2);
-                    result.DateCreated = reader.GetDateTime(3);
+                    var blog = new Blog();
+
+                    blog.Id = reader.GetInt32(0);
+                    blog.Title = reader.GetString(1);
+                    blog.Description = reader.GetString(2);
+                    blog.DateCreated = reader.GetDateTime(3);
+
+                    result.Add(blog);
                 }
 
             }
