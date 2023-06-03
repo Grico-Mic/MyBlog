@@ -13,5 +13,6 @@ namespace MyBlog.Repositories
 
         }
         public DbSet<Blog> MyBlog { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }

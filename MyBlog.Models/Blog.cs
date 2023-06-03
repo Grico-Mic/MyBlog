@@ -5,6 +5,10 @@ namespace MyBlog.Models
 {
     public class Blog
     {
+        public Blog()
+        {
+            this.DateCreated = DateTime.Now;
+        }
         public int Id { get; set; }
         [Required]
         [StringLength (maximumLength:50,MinimumLength=3)]
