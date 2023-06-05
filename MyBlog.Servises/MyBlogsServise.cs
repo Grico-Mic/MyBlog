@@ -1,4 +1,5 @@
-﻿using MyBlog.Models;
+﻿using MyBlog.Common;
+using MyBlog.Models;
 using MyBlog.Repositories;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Servises.Interfaces;
@@ -40,6 +41,19 @@ namespace MyBlog.Servises
             else
             {
                 return _myBlogsRepository.GetBlogByTitle(title);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var blog = _myBlogsRepository.GetById(id);
+            if (blog == null)
+            {
+                throw new NotFoundException("The blog that you you want to delete is no longer available.");
+            }
+            else
+            {
+                _myBlogsRepository.Delete(blog);
             }
         }
     }

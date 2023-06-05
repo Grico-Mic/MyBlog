@@ -22,6 +22,18 @@ namespace MyBlog.Controllers
         {
             return View();
         }
+        public IActionResult ActionNotSuccessfull(string message)
+
+        {
+            ViewBag.Message = message;
+            return View();
+        }
+        public IActionResult InternalError(string message)
+
+        {
+            ViewBag.Message = message;
+            return View();
+        }
     }
 }
 

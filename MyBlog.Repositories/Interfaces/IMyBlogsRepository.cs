@@ -10,5 +10,6 @@ namespace MyBlog.Repositories.Interfaces
         public List<Blog> GetAll();
         void Create(Blog blog);
         public List<Blog> GetBlogByTitle(string title);
+        void Delete(Blog blog);
     }
 }

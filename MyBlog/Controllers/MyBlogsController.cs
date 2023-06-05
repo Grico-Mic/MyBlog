@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MyBlog.Common;
 using MyBlog.Models;
 using MyBlog.Servises;
 using MyBlog.Servises.Interfaces;
@@ -20,15 +21,31 @@ namespace MyBlog.Controllers
             var blogs = _servise.GetBlogByTitle(title);
             return View(blogs);
         }
+        public IActionResult ManageBlogs(string errorMessage , string successMessage)
+        {
+            ViewBag.ErrorMessage = errorMessage;
+            ViewBag.SuccessMessage = successMessage;
+            var blogs = _servise.GetAll();
+            return View(blogs);
+        }
         public IActionResult Details(int id)
         {
-            var blogs = _servise.GetById(id);
-            if (blogs == null)
+            try
             {
-               return RedirectToAction("ErrorNotFound", "Info");
-            }
+                var blogs = _servise.GetById(id);
+                if (blogs == null)
+                {
+                    return RedirectToAction("ErrorNotFound", "Info");
+                }
 
-            return View(blogs);
+                return View(blogs);
+            }
+            catch (Exception)
+            {
+
+                return RedirectToAction("InternalError", "Info"); ;
+            }
+           
         }
         [HttpGet]
         public IActionResult Create()
@@ -41,10 +58,29 @@ namespace MyBlog.Controllers
             if (ModelState.IsValid)
             {
                 _servise.Create(blog);
-               return RedirectToAction("Overview");
+               return RedirectToAction("ManageBlogs", new { SuccessMessage = "The blog was created successfully." });
             }
 
             return View(blog);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            try
+            {
+                _servise.Delete(id);
+                return RedirectToAction("ManageBlogs", new { SuccessMessage = "The movie was deleted successfully." });
+            }
+            catch (NotFoundException ex)
+            {
+
+                return RedirectToAction("ManageBlogs", new { ErrorMessage = ex.Message });
+            }
+            catch (Exception ex)
+            {
+                return RedirectToAction("InternalError", "Info");
+            }
+            
         }
     }
 }
