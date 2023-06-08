@@ -17,6 +17,7 @@ namespace MyBlog.Models
         [StringLength (maximumLength:500,MinimumLength =10)]
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
-       
+        public DateTime? DateUpdated { get; set; }
+
     }
 }

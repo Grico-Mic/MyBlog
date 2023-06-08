@@ -10,5 +10,6 @@ namespace MyBlog.Servises.Interfaces
         void Create(Blog blog);
         public List<Blog>GetBlogByTitle(string title);
         void Delete(int id);
+        void Update(Blog blog);
     }
 }

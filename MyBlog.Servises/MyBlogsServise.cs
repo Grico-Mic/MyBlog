@@ -28,7 +28,9 @@ namespace MyBlog.Servises
         }
 
         public void Create(Blog blog)
+
         {
+            blog.DateCreated = System.DateTime.Now;
             _myBlogsRepository.Create(blog);
         }
 
@@ -54,6 +56,23 @@ namespace MyBlog.Servises
             else
             {
                 _myBlogsRepository.Delete(blog);
+            }
+        }
+
+        public void Update(Blog blog)
+        {
+            var updatedBlog = _myBlogsRepository.GetById(blog.Id);
+            if (updatedBlog != null)
+            {
+                updatedBlog.Title = blog.Title;
+                updatedBlog.Description = blog.Description;
+                updatedBlog.DateUpdated = blog.DateUpdated;
+
+                _myBlogsRepository.Update(updatedBlog);
+            }
+            else
+            {
+                throw new NotFoundException($"The blog that you want to update was no found.");
             }
         }
     }

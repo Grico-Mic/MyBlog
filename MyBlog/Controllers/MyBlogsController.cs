@@ -80,7 +80,37 @@ namespace MyBlog.Controllers
             {
                 return RedirectToAction("InternalError", "Info");
             }
-            
         }
+            [HttpGet]
+            public IActionResult Update(int id)
+            {
+                var blog = _servise.GetById(id);
+                return View(blog);
+            }
+        [HttpPost]
+        public IActionResult Update(Blog blog)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _servise.Update(blog);
+                    return RedirectToAction("ManageBlogs", new { SuccessMessage = "The movie was updated successfully." });
+                }
+                catch (NotFoundException ex)
+                {
+                    return RedirectToAction("ManageBlogs", new { ErrorMessage = ex.Message });
+                    
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("InternalError","Info");
+                }   
+               
+            }
+            return View(blog);
+        }
+
+
     }
 }
