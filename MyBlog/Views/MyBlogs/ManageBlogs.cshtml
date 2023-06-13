@@ -1,4 +1,4 @@
-﻿@model List<MyBlog.Models.Blog>
+﻿@model List<MyBlog.ViewModels.BlogManageBlogsModel>
 
 @{
     ViewBag.Title = "ManageBlogs";
@@ -52,7 +52,7 @@ else
                     <td>@blog.Title</td>
                     <td class="text-center">
                         <a class="text-warning" href="/MyBlogs/Update/@blog.Id">Edit</a> |
-                        <a class="text-danger" href="/MyBlogs/Delete/@blog.Id">Delete</a>
+                        <a class="text-danger" href="/MyBlogs/Delete/@blog.Id" onclick="return confirm('Are you sure?')">Delete</a>
                     </td>
                 </tr>
             }

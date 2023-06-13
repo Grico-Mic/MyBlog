@@ -1,4 +1,4 @@
-﻿@model MyBlog.Models.Blog
+﻿@model MyBlog.ViewModels.BlogDetailsModel
 
 @{ 
     ViewBag.Title = "Details";
@@ -14,7 +14,7 @@
         <h1>@Model.Title</h1>
         <h2>Description</h2>
         <p>@Model.Description</p>
-        <h4>@Model.DateCreated </h4>
+        <h4>Date created:@Model.DateCreated </h4>
     </div>
     <div class="container">
         <a class="btn btn-primary" href="/MyBlogs/Overview" role="button">Back</a>

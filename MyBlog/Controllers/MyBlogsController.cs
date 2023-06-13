@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Common;
+using MyBlog.Mappings;
 using MyBlog.Models;
 using MyBlog.Servises;
 using MyBlog.Servises.Interfaces;
+using MyBlog.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,15 +20,20 @@ namespace MyBlog.Controllers
         }
         public IActionResult Overview(string title)
         {
+
             var blogs = _servise.GetBlogByTitle(title);
-            return View(blogs);
+            var listOverviewModel = new List<BlogOverviewModel>();
+
+            var blogOverviewModel = blogs.Select(x => x.ToOverviewModel()).ToList();
+            return View(blogOverviewModel);
         }
         public IActionResult ManageBlogs(string errorMessage , string successMessage)
         {
             ViewBag.ErrorMessage = errorMessage;
             ViewBag.SuccessMessage = successMessage;
-            var blogs = _servise.GetAll();
-            return View(blogs);
+           var blogs = _servise.GetAll();
+            var manageBlogsModel = blogs.Select(x => x.ToManageBlogsModel()).ToList();
+            return View(manageBlogsModel);
         }
         public IActionResult Details(int id)
         {
@@ -38,7 +45,7 @@ namespace MyBlog.Controllers
                     return RedirectToAction("ErrorNotFound", "Info");
                 }
 
-                return View(blogs);
+                return View(blogs.ToDetailsModel());
             }
             catch (Exception)
             {
@@ -53,11 +60,12 @@ namespace MyBlog.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Blog blog)
+        public IActionResult Create(BlogCreateModel blog)
         {
             if (ModelState.IsValid)
             {
-                _servise.Create(blog);
+                var domainModel = blog.ToModel();
+                _servise.Create(domainModel);
                return RedirectToAction("ManageBlogs", new { SuccessMessage = "The blog was created successfully." });
             }
 
@@ -85,16 +93,16 @@ namespace MyBlog.Controllers
             public IActionResult Update(int id)
             {
                 var blog = _servise.GetById(id);
-                return View(blog);
+                return View(blog.ToUpdateModel());
             }
         [HttpPost]
-        public IActionResult Update(Blog blog)
+        public IActionResult Update(BlogUpdateModel blog)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _servise.Update(blog);
+                    _servise.Update(blog.ToModel());
                     return RedirectToAction("ManageBlogs", new { SuccessMessage = "The movie was updated successfully." });
                 }
                 catch (NotFoundException ex)
