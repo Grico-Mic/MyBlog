@@ -24,7 +24,7 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyBlogDbContext>(x => x.UseSqlServer("Server=DESCTOP-V9GRIC;Database=MyBlog;Trusted_Connection=true;"));
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddTransient<IMyBlogsServise, MyBlogsServise>();
             services.AddTransient<IMyBlogsRepository, BlogsRepository>();
         }
