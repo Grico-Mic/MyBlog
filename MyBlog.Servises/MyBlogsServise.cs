@@ -2,6 +2,7 @@
 using MyBlog.Models;
 using MyBlog.Repositories;
 using MyBlog.Repositories.Interfaces;
+using MyBlog.Servises.DtoModels;
 using MyBlog.Servises.Interfaces;
 using System.Collections.Generic;
 
@@ -46,21 +47,26 @@ namespace MyBlog.Servises
             }
         }
 
-        public void Delete(int id)
+        public StatusModel Delete(int id)
         {
+            var response = new StatusModel();
             var blog = _myBlogsRepository.GetById(id);
             if (blog == null)
             {
-                throw new NotFoundException("The blog that you you want to delete is no longer available.");
+                response.IsSuccessful = false;
+                response.Message = "The blog that you you want to delete is no longer available.";      
             }
             else
             {
                 _myBlogsRepository.Delete(blog);
+                response.IsSuccessful = true;
             }
+            return response;
         }
 
-        public void Update(Blog blog)
+        public StatusModel Update(Blog blog)
         {
+            var response = new StatusModel();
             var updatedBlog = _myBlogsRepository.GetById(blog.Id);
             if (updatedBlog != null)
             {
@@ -69,11 +75,14 @@ namespace MyBlog.Servises
                 updatedBlog.DateUpdated = blog.DateUpdated;
 
                 _myBlogsRepository.Update(updatedBlog);
+                response.IsSuccessful = true;
             }
             else
             {
-                throw new NotFoundException($"The blog that you want to update was no found.");
+                response.IsSuccessful = false;
+                response.Message = "The blog that you want to update was no found.";
             }
+            return response;
         }
     }
 }

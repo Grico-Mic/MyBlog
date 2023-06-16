@@ -76,14 +76,17 @@ namespace MyBlog.Controllers
         {
             try
             {
-                _servise.Delete(id);
+                var response = _servise.Delete(id);
+                if (response.IsSuccessful)
+                {
                 return RedirectToAction("ManageBlogs", new { SuccessMessage = "The movie was deleted successfully." });
+                }
+                else
+                {
+                    return RedirectToAction("ManageBlogs", new { ErrorMessage = response.Message });
+                }
             }
-            catch (NotFoundException ex)
-            {
-
-                return RedirectToAction("ManageBlogs", new { ErrorMessage = ex.Message });
-            }
+          
             catch (Exception ex)
             {
                 return RedirectToAction("InternalError", "Info");
@@ -102,14 +105,17 @@ namespace MyBlog.Controllers
             {
                 try
                 {
-                    _servise.Update(blog.ToModel());
+                    var response = _servise.Update(blog.ToModel());
+                    if (response.IsSuccessful)
+                    {
                     return RedirectToAction("ManageBlogs", new { SuccessMessage = "The movie was updated successfully." });
-                }
-                catch (NotFoundException ex)
-                {
-                    return RedirectToAction("ManageBlogs", new { ErrorMessage = ex.Message });
-                    
-                }
+                    }
+                    else
+                    {
+                    return RedirectToAction("ManageBlogs", new { ErrorMessage = response.Message });
+                    }
+            }
+                
                 catch (Exception)
                 {
                     return RedirectToAction("InternalError","Info");
