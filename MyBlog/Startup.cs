@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -24,9 +25,16 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyBlogDbContext>(x => x.UseSqlServer("Server=DESCTOP-V9GRIC;Database=MyBlog;Trusted_Connection=true;"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
             services.AddTransient<IMyBlogsServise, MyBlogsServise>();
             services.AddTransient<IMyBlogsRepository, BlogsRepository>();
+
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -47,6 +55,7 @@ namespace MyBlog
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
