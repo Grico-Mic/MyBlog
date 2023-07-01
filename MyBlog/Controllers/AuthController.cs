@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Servises.Interfaces;
 using MyBlog.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyBlog.Controllers
 {
@@ -21,15 +17,23 @@ namespace MyBlog.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult SignIn(AuthSignInModel authSignInModel)
+        public IActionResult SignIn(AuthSignInModel authSignInModel,string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                var response = _authService.SignIn(authSignInModel.Username, authSignInModel.Password, HttpContext);
+                var response = _authService.SignIn(authSignInModel.Username, authSignInModel.Password,authSignInModel.IsPersistent, HttpContext);
                 if (response.IsSuccessful == true)
                 {
+                    if (returnUrl == null)
+                    {
                     return RedirectToAction("Overview", "MyBlogs");
+                    }
+                    else
+                    {
+                        return Redirect(returnUrl);
+                    }
                 }
+                
                 else
                 {
                     ModelState.AddModelError("", response.Message);
@@ -38,5 +42,12 @@ namespace MyBlog.Controllers
             }
             return View(authSignInModel);
         }
+
+        public IActionResult SignOut()
+        {
+            _authService.SignOut(HttpContext);
+            return  RedirectToAction("Overview", "MyBlogs");
+        }
     }
 }
+ 

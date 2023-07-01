@@ -1,6 +1,4 @@
-﻿using MyBlog.Common;
-using MyBlog.Models;
-using MyBlog.Repositories;
+﻿using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Servises.DtoModels;
 using MyBlog.Servises.Interfaces;

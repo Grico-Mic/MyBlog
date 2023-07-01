@@ -1,9 +1,5 @@
 ﻿using MyBlog.Models;
 using MyBlog.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace MyBlog.Mappings
 {
@@ -48,6 +44,16 @@ namespace MyBlog.Mappings
                 Description = blog.Description,
                 DateCreated = blog.DateCreated,
                 DateUpdated = blog.DateUpdated
+            };
+        }
+
+        public static UsersDetailsModel ToUsersDetailsModel(this User viewModel)
+        {
+            return new UsersDetailsModel()
+            {
+               Username = viewModel.Username,
+               Email = viewModel.Email,
+               Address = viewModel.Address
             };
         }
     }

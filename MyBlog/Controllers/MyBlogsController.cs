@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using MyBlog.Common;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Mappings;
-using MyBlog.Models;
-using MyBlog.Servises;
 using MyBlog.Servises.Interfaces;
 using MyBlog.ViewModels;
 using System;
@@ -11,13 +9,16 @@ using System.Linq;
 
 namespace MyBlog.Controllers
 {
+    [Authorize]
     public class MyBlogsController : Controller
     {
+       
         public IMyBlogsServise _servise { get; set; }
         public MyBlogsController(IMyBlogsServise blogsServise)
         {
             _servise = blogsServise;
         }
+        [AllowAnonymous]
         public IActionResult Overview(string title)
         {
 
@@ -35,6 +36,7 @@ namespace MyBlog.Controllers
             var manageBlogsModel = blogs.Select(x => x.ToManageBlogsModel()).ToList();
             return View(manageBlogsModel);
         }
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             try
@@ -87,7 +89,7 @@ namespace MyBlog.Controllers
                 }
             }
           
-            catch (Exception ex)
+            catch (Exception )
             {
                 return RedirectToAction("InternalError", "Info");
             }

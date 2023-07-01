@@ -9,6 +9,7 @@ using MyBlog.Repositories;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Servises;
 using MyBlog.Servises.Interfaces;
+using System;
 
 namespace MyBlog
 {
@@ -26,7 +27,14 @@ namespace MyBlog
         {
             services.AddDbContext<MyBlogDbContext>(x => x.UseSqlServer("Server=DESCTOP-V9GRIC;Database=MyBlog;Trusted_Connection=true;"));
 
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                    options.SlidingExpiration = true;
+                    options.LoginPath = "/Auth/SignIn";
+                }
+                );
 
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
@@ -34,7 +42,10 @@ namespace MyBlog
             services.AddTransient<IMyBlogsRepository, BlogsRepository>();
 
             services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IUsersRepository, UsersRepository>();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
