@@ -7,42 +7,51 @@
 </head>
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light ">
             <a class="navbar-brand" href="/MyBlogs/Overview">My Blog</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/MyBlogs/Overview">Overview</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Info/AboutMe">About Me</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Info/Contact">Contact</a>
-                    </li>
-
-                    @if (User.Identity.IsAuthenticated)
-                    {
+            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarNav">
+                <div>
+                    <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="/MyBlogs/ManageBlogs">Manage Blogs</a>
+                            <a class="nav-link" href="/MyBlogs/Overview">Overview</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Users/Details">@User.FindFirst("Username").Value</a>
+                            <a class="nav-link" href="/Info/AboutMe">About Me</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/Auth/SignOut">Sign out</a>
+                            <a class="nav-link" href="/Info/Contact">Contact</a>
                         </li>
-                    }
-                    else
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link" href="/Auth/SignIn">Sign In</a>
-                        </li>
-                    }
-                </ul>
+                    </ul>
+                </div>
+                
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="dropdown">
+                        <button class="btn btn-outline-*  dropdown-toggle  "  type="button" data-toggle="dropdown" aria-expanded="false">
+                            @User.FindFirst("Username").Value
+                        </button>
+                        <div class="dropdown-menu ">
+                            <a class="dropdown-item" href="/Users/Details">My Profile</a>
+                            <a class="dropdown-item" href="/MyBlogs/ManageBlogs">Manage Blogs</a>
+                            <a class="dropdown-item" href="/Auth/SignOut" onclick="return confirm('Are you sure?')">Sign out</a>
+                        </div>
+                    </div>
+                }
+                else
+                {
+            <div >
+                <div class="nav-item d-inline-flex ">
+                    <a class="nav-link" href="#">Sign Up</a>
+                    <a class="nav-link" href="/Auth/SignIn">Sign In</a>
+                </div>
+               
+            </div>
+                    
+                }
+              
             </div>
         </nav>
     </div>

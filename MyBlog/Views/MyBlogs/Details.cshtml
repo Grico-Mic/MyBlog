@@ -17,7 +17,14 @@
         <h4>Date created:@Model.DateCreated </h4>
     </div>
     <div class="container">
-        <a class="btn btn-primary" href="/MyBlogs/Overview" role="button">Back</a>
+        @if (User.Identity.IsAuthenticated )
+          {
+         <a class="btn btn-primary overflow-hidden" href="/MyBlogs/ManageBlogs" role="button">Back</a>
+          }
+        else
+          {
+         <a class="btn btn-primary" href="/MyBlogs/Overview" role="button">Back</a>
+          }
     </div>
        
 </body>
