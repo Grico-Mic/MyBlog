@@ -6,5 +6,7 @@ namespace MyBlog.Repositories.Interfaces
     {
         User GetByUsername(string username);
         User GetById(int userId);
+        bool CheckIfExist(string username, string email);
+        void Add(User newUser);
     }
 }

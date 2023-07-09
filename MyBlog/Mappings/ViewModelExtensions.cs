@@ -25,6 +25,17 @@ namespace MyBlog.Mappings
                 DateCreated = blog.DateCreated,
                 DateUpdated = blog.DateUpdated
             };
+
+        }
+        public static User ToSignUpModel(this AuthSignUpModel authSignUp)
+        {
+            return new User()
+            {
+                Username = authSignUp.Username,
+                Password = authSignUp.Password,
+                Address = authSignUp.Address,
+                Email = authSignUp.Email
+            };
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Servises.DtoModels;
 using MyBlog.Servises.Interfaces;
@@ -51,6 +52,29 @@ namespace MyBlog.Servises
         public void SignOut(HttpContext httpContext)
         {
             Task.Run(() => httpContext.SignOutAsync()).GetAwaiter().GetResult();
+        }
+
+        public StatusModel SignUp(User signUpUser)
+        {
+            var response = new StatusModel();
+            var user = _usersRepository.CheckIfExist(signUpUser.Username,signUpUser.Email);
+            if (user)
+            {
+                response.IsSuccessful = false;
+                response.Message = "User with username or email already exist";
+                return response;
+            }
+
+            var newUser = new User()
+            {
+                Username = signUpUser.Username,
+                Password = signUpUser.Password,
+                Address = signUpUser.Address,
+                Email = signUpUser.Email
+
+            };
+            _usersRepository.Add(newUser);
+            return response;
         }
     }
 }
