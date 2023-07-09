@@ -22,7 +22,7 @@ namespace MyBlog.Servises
         {
             var response = new StatusModel();
             var user = _usersRepository.GetByUsername(username);
-            if (user != null && user.Password == password)
+            if (user != null && BCrypt.Net.BCrypt.Verify(password,user.Password))
             {
                 var claims = new List<Claim>()
                 {
@@ -68,7 +68,7 @@ namespace MyBlog.Servises
             var newUser = new User()
             {
                 Username = signUpUser.Username,
-                Password = signUpUser.Password,
+                Password = BCrypt.Net.BCrypt.HashPassword(signUpUser.Password),
                 Address = signUpUser.Address,
                 Email = signUpUser.Email
 
