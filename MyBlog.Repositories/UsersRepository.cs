@@ -33,5 +33,12 @@ namespace MyBlog.Repositories
         {
             return _context.Users.FirstOrDefault(x => x.Username == username);
         }
+
+        public void Update(User updatedUser)
+        {
+             _context.Users.Update(updatedUser);
+            _context.SaveChanges();
+
+        }
     }
 }

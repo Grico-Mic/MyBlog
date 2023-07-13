@@ -56,5 +56,16 @@ namespace MyBlog.Mappings
                Address = viewModel.Address
             };
         }
+
+        public static UsersUpdateModel ToUpdateModel(this User user)
+        {
+            return new UsersUpdateModel()
+            {
+                Username = user.Username,
+                Email = user.Email,
+                Address = user.Address
+            };
+        }
+
     }
 }

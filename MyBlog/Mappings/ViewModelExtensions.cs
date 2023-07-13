@@ -37,5 +37,16 @@ namespace MyBlog.Mappings
                 Email = authSignUp.Email
             };
         }
+
+        public static User ToUpdateModel(this UsersUpdateModel  usersUpdateModel)
+        {
+            return new User()
+            {
+                Username = usersUpdateModel.Username,
+                Address = usersUpdateModel.Address,
+                Email = usersUpdateModel.Email,
+                DateUpdated = System.DateTime.Now
+            };
+        }
     }
 }

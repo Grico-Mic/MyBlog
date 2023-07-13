@@ -8,5 +8,6 @@ namespace MyBlog.Repositories.Interfaces
         User GetById(int userId);
         bool CheckIfExist(string username, string email);
         void Add(User newUser);
+        void Update(User updatedUser);
     }
 }
