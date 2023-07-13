@@ -16,6 +16,9 @@ namespace MyBlog.Models
        
         [Required]
         public DateTime DateCreated { get; set; }
+        [Required]
+        public DateTime DateUpdated { get; set; }
+        public bool IsAdmin { get; set; }
 
     }
 }

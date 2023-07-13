@@ -36,6 +36,15 @@ namespace MyBlog
                 }
                 );
 
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", policy =>
+                {
+                    policy.RequireClaim("IsAdmin", "True");
+
+                });
+            });
+
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddTransient<IMyBlogsServise, MyBlogsServise>();

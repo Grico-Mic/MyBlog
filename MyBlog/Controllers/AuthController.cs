@@ -77,6 +77,10 @@ namespace MyBlog.Controllers
             }
 
         }
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }
  

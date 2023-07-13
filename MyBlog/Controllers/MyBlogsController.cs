@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace MyBlog.Controllers
 {
-    [Authorize]
+    [Authorize(Policy = "IsAdmin")]
     public class MyBlogsController : Controller
     {
        
