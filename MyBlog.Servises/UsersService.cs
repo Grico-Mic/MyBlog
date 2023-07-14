@@ -29,7 +29,7 @@ namespace MyBlog.Servises
 
                 _usersRepository.Update(UpdatedUser);
                 response.IsSuccessful = true;
-                response.Message = "User was updated successfully.";
+               
             }
             else
             {

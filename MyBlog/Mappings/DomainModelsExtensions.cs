@@ -61,6 +61,7 @@ namespace MyBlog.Mappings
         {
             return new UsersUpdateModel()
             {
+                Id = user.Id,
                 Username = user.Username,
                 Email = user.Email,
                 Address = user.Address

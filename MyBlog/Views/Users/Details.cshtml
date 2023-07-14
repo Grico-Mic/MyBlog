@@ -10,7 +10,9 @@
 {
     <div class="alert alert-danger" role="alert">
         @ViewBag.ErrorMessage
-       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 }
 
@@ -20,7 +22,9 @@
 {
     <div class="alert alert-success" role="alert">
         @ViewBag.SuccessMessage
-       
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 }
 

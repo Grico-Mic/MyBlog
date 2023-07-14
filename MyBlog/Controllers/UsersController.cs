@@ -15,11 +15,13 @@ namespace MyBlog.Controllers
         {
             _usersService = usersService;
         }
-       
-        public IActionResult Details()
+
+        public IActionResult Details(string SuccessMessage,string ErrorMessage)
         {
             try
             {
+                ViewBag.ErrorMessage = ErrorMessage;
+                ViewBag.SuccessMessage = SuccessMessage;
                 var userId = User.FindFirst("Id").Value;
                 var user = _usersService.GetDetails(userId);
                 if (user == null)
@@ -31,9 +33,10 @@ namespace MyBlog.Controllers
             catch (Exception)
             {
                 return RedirectToAction("InternalError", "Info");
+
             }
-               
         }
+          
         [HttpGet]
         public IActionResult UpdateUser()
         {
@@ -66,11 +69,11 @@ namespace MyBlog.Controllers
                     var response = _usersService.UpdateUser(user);
                     if (response.IsSuccessful)
                     {
-                        return RedirectToAction("Details", new { SuccessMessage = response.Message });
+                        return RedirectToAction("Details",  new { SuccessMessage = "The blog was updated successfully."  });
                     }
                     else
                     {
-                        return RedirectToAction("Details", new { ErrorMessage = response.Message });
+                        return RedirectToAction("Details", new { ErrorMessage = $"The User with id {user.Id} was not found" });
                     }
                 }
                 catch (Exception)
