@@ -68,5 +68,15 @@ namespace MyBlog.Mappings
             };
         }
 
+        public static UsersManageUsersModel ToManageUsersModel(this User user)
+        {
+            return new UsersManageUsersModel()
+            {
+                Id = user.Id,
+                Username = user.Username,
+               IsAdmin = user.IsAdmin
+            };
+        }
+
     }
 }

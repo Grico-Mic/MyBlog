@@ -2,6 +2,7 @@
 using MyBlog.Repositories.Interfaces;
 using MyBlog.Servises.DtoModels;
 using MyBlog.Servises.Interfaces;
+using System.Collections.Generic;
 
 namespace MyBlog.Servises
 {
@@ -12,9 +13,49 @@ namespace MyBlog.Servises
         {
             _usersRepository = usersRepository;
         }
+
+        public StatusModel Delete(int id)
+        {
+            var response = new StatusModel();
+            var user = _usersRepository.GetById(id);
+            if (user == null)
+            {
+                response.IsSuccessful = false;
+                response.Message = "User does not exist";  
+            }
+            else
+            {
+                _usersRepository.Delete(user);
+            }
+            return response;
+           
+        }
+
+        public List<User> GetAll()
+        {
+            return _usersRepository.GetAll();
+        }
+
         public User GetDetails(string userId)
         {
             return _usersRepository.GetById(int.Parse(userId));
+        }
+
+        public StatusModel ToggleAdminRole(int id)
+        {
+            var response = new StatusModel();
+            var user = _usersRepository.GetById(id);
+            if (user == null)
+            {
+                response.IsSuccessful = false;
+                response.Message = "User was not exist";
+            }
+            else
+            {
+                user.IsAdmin = !user.IsAdmin;
+                _usersRepository.Update(user);
+            }
+            return response;
         }
 
         public StatusModel UpdateUser(User user)

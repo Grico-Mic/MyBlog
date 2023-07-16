@@ -1,5 +1,6 @@
 ﻿using MyBlog.Models;
 using MyBlog.Repositories.Interfaces;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MyBlog.Repositories
@@ -22,6 +23,17 @@ namespace MyBlog.Repositories
         public bool CheckIfExist(string username, string email)
         {
             return _context.Users.Any(x => x.Username == username || x.Email == email);
+        }
+
+        public void Delete(User user)
+        {
+            _context.Remove(user);
+            _context.SaveChanges();
+        }
+
+        public List<User> GetAll()
+        {
+            return _context.Users.ToList();
         }
 
         public User GetById(int userId)

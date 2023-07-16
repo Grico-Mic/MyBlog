@@ -4,10 +4,11 @@ using MyBlog.Mappings;
 using MyBlog.Servises.Interfaces;
 using MyBlog.ViewModels;
 using System;
+using System.Linq;
 
 namespace MyBlog.Controllers
 {
-    [Authorize]
+   
     public class UsersController : Controller
     {
         private readonly IUsersService _usersService;
@@ -15,7 +16,7 @@ namespace MyBlog.Controllers
         {
             _usersService = usersService;
         }
-
+        [Authorize]
         public IActionResult Details(string SuccessMessage,string ErrorMessage)
         {
             try
@@ -36,7 +37,7 @@ namespace MyBlog.Controllers
 
             }
         }
-          
+        [Authorize]
         [HttpGet]
         public IActionResult UpdateUser()
         {
@@ -57,6 +58,7 @@ namespace MyBlog.Controllers
             }
            
         }
+        [Authorize]
         [HttpPost]
         public IActionResult UpdateUser(UsersUpdateModel usersUpdateModel)
         {
@@ -69,7 +71,7 @@ namespace MyBlog.Controllers
                     var response = _usersService.UpdateUser(user);
                     if (response.IsSuccessful)
                     {
-                        return RedirectToAction("Details",  new { SuccessMessage = "The blog was updated successfully."  });
+                        return RedirectToAction("Details",  new { SuccessMessage = "User was updated successfully."  });
                     }
                     else
                     {
@@ -82,6 +84,42 @@ namespace MyBlog.Controllers
                 }
             }
             return View(usersUpdateModel);
+        }
+        [Authorize (Policy = "IsAdmin") ]
+        public IActionResult ManageUsers(string SuccessMessage, string ErrorMessage)
+        {
+            ViewBag.ErrorMessage = ErrorMessage;
+            ViewBag.SuccessMessage = SuccessMessage;
+            var id = int.Parse(User.FindFirst("Id").Value);
+            var users = _usersService.GetAll();
+            var viewModel = users.Where(x => x.Id != id).Select(x => x.ToManageUsersModel()).ToList();
+            return View(viewModel);
+        }
+        [Authorize (Policy = "IsAdmin") ]
+        public IActionResult ToggleAdminRole(int id)
+        { 
+                var response = _usersService.ToggleAdminRole(id);
+            if (response.IsSuccessful)
+            {
+                return RedirectToAction("ManageUsers", new {SuccessMessage = "User role updated successfuly" });
+            }
+            else
+            {
+                return RedirectToAction("ManageUsers", new { response.Message });
+            }  
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var response = _usersService.Delete(id);
+            if (response.IsSuccessful)
+            {
+                return RedirectToAction("ManageUsers", new { SuccessMessage = "User was deleted successfuly" });
+            }
+            else
+            {
+                return RedirectToAction("ManageUsers", new { response.Message });
+            }
         }
     }
 }
