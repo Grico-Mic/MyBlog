@@ -74,7 +74,7 @@ namespace MyBlog.Servises
                 Email = signUpUser.Email
 
             };
-            _usersRepository.Add(newUser);
+            _usersRepository.Create(newUser);
             return response;
         }
     }

@@ -5,40 +5,17 @@ using System.Linq;
 
 namespace MyBlog.Repositories
 {
-    public class UsersRepository : IUsersRepository
+    public class UsersRepository : BaseRepository<User>,IUsersRepository
     {
-        private MyBlogDbContext _context;
+       
 
-        public UsersRepository(MyBlogDbContext context)
+        public UsersRepository(MyBlogDbContext context) : base(context)
         {
-           _context = context;
+           
         }
-
-        public void Add(User newUser)
-        {
-            _context.Add(newUser);
-            _context.SaveChanges();
-        }
-
         public bool CheckIfExist(string username, string email)
         {
             return _context.Users.Any(x => x.Username == username || x.Email == email);
-        }
-
-        public void Delete(User user)
-        {
-            _context.Remove(user);
-            _context.SaveChanges();
-        }
-
-        public List<User> GetAll()
-        {
-            return _context.Users.ToList();
-        }
-
-        public User GetById(int userId)
-        {
-            return _context.Users.FirstOrDefault(x => x.Id == userId);
         }
 
         public User GetByUsername (string username)
@@ -46,11 +23,6 @@ namespace MyBlog.Repositories
             return _context.Users.FirstOrDefault(x => x.Username == username);
         }
 
-        public void Update(User updatedUser)
-        {
-             _context.Users.Update(updatedUser);
-            _context.SaveChanges();
-
-        }
+        
     }
 }
